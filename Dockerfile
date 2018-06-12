@@ -1,4 +1,11 @@
 FROM nginx
 MAINTAINER GeoNode development team
 
-COPY nginx.conf /etc/nginx/nginx.conf
+ADD *.envsubst /etc/nginx/
+ADD docker-entrypoint.sh /
+
+RUN chmod +x /docker-entrypoint.sh
+
+ENTRYPOINT ["/docker-entrypoint.sh"]
+CMD ["nginx", "-g", "daemon off;"]
+
