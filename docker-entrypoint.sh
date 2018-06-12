@@ -7,6 +7,9 @@ if [ -z "${NGINX_HOST}" ]; then
   exit 1
 fi
 
+# cleanup NGINX_HOST (eventually remove protocol, port etc...)
+export NGINX_HOST=`echo $NGINX_HOST | sed 's/^http\(\|s\):\/\/\(.*\)/\2/g' | sed 's/:[0-9]\+//g' | sed 's/\/$//g'`
+
 if [ -z "${CERTS_DIR}" ]; then
   export CERTS_DIR="/etc/nginx/certs/${NGINX_HOST}"
 fi
